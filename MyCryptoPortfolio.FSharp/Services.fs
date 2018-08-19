@@ -31,17 +31,15 @@
                 dict
             with
             | _ as e -> Error ("error converting result to dictionary: " + e.Message)
-
+        
         let getRates currencySymbols outputSymbols = 
             async {                
                 match currencySymbols with
-                | [] -> 
-                    //return (Error "currency list must be filled to get rates")
+                | [] ->                     
                     return raise (Ex "currency list must be filled to get rates")
                 | _ ->                    
                     match outputSymbols with
-                    | [] -> 
-                        //return (Error "output symbol list must be filled")
+                    | [] ->                         
                         return raise (Ex "output symbol list must be filled")
                     | _ -> 
                         try
@@ -50,8 +48,7 @@
                             let requestUrl = sprintf "https://min-api.cryptocompare.com/data/pricemulti?fsyms=%s&tsyms=%s" outputSymbolString currencySymbolString
                             let! result = httpClient.GetAsync(requestUrl) |> Async.AwaitTask
                             match result.IsSuccessStatusCode with
-                            | false -> 
-                                //return (Error ("error getting rates:" + result.StatusCode.ToString()))
+                            | false ->                                 
                                 return raise (Ex ("error getting rates:" + result.StatusCode.ToString()))
                             | _ ->
                                 let! content = result.Content.ReadAsStringAsync() |> Async.AwaitTask
@@ -60,8 +57,7 @@
                                 | Ok v -> return v
                                 | Error msg -> return raise (Ex(msg))
                                 
-                        with
-                        //| _ as e -> return (Error ("error getting rates: " + e.Message))
+                        with                        
                         | _ as e -> return raise (Ex("error getting rates: " + e.Message))
 
              }
@@ -127,41 +123,7 @@
             | _  -> return defaultSymbols
 
             }
-
-
-    module PortfolioService =
-
-        open Plugin.Settings;  
-        open Plugin.Settings.Abstractions;  
-        open Newtonsoft.Json
-        open MyCryptoPortfolio.FSharp
-        
-        let appSettingsKey = "portfolioData"
-        let appSettings = CrossSettings.Current;        
-
-        let loadPortfolio () = 
-            let portfolioJson = appSettings.GetValueOrDefault(appSettingsKey,"")
-            if (portfolioJson="") then
-                []
-            else
-                try
-                    let portfolioData = JsonConvert.DeserializeObject<PortfolioEntry[]>(portfolioJson)
-                    portfolioData |> Array.toList
-                with
-                | _ -> []
-
-
-        let storePortfolio (portfolioData:PortfolioEntry list) =
-            let serializedData = JsonConvert.SerializeObject(portfolioData)
-            appSettings.AddOrUpdateValue(appSettingsKey,serializedData)
-
-
-
-                                        
-
-
-                    
-
+    
 
 
 

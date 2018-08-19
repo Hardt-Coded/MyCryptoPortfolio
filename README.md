@@ -12,4 +12,9 @@ There is another App named MyCryptoPortfolio in the Windows App Store. The curre
 
 Have fun.
 
+Btw. Please note, that I am using Exceptions in my service code. The first approache was the using of Result. But I ran into a strange error on debugging on my Huawei P20.
+
+The function in the service file return correctly Async<Result<ExRate list, string>>. But the consuming function App.fs -> getRates, gets a strange error message, something with Argument bla, and on "Ok x" x is an integer. So I change to the exception thingy.
+
+
 
