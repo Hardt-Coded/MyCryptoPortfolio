@@ -17,11 +17,16 @@
                 <Label Text="+"
                        FontSize="32"
                        FontAttributes="Bold"
-                       TextColor="DarkViolet" />
-                <Label Text="⟳"
-                       FontSize="30"
+                       TextColor="DarkViolet" 
+                       VerticalOptions="Center"
+                       Margin="3"/>
+                <!-- ⟳ -->
+                <Label Text="9"
+                       FontSize="24"
                        FontAttributes="Bold"
-                       TextColor="DarkViolet" />
+                       TextColor="DarkViolet"
+                       VerticalOptions="Center"
+                       Margin="2,6,2,2"/>
             </StackLayout>
 
             <StackLayout Grid.Row="1">

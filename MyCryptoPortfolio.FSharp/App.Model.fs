@@ -37,6 +37,9 @@ module Model =
 
             [<JsonIgnore>]
             Coins: Coin list
+
+            [<JsonIgnore>]
+            SecondsWaitUntilNextCall: int
         }
 
     type Msg = 
@@ -68,6 +71,7 @@ module Model =
         | ChangeBusyState of bool
         | DisplayErrorMessage of title:string * message:string
         | ChangeMainColor of colorHex:string
+        | SetSecondsWaitUntilNextCall of seconds:int
     
 
 

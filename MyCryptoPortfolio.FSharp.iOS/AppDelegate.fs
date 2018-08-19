@@ -13,7 +13,7 @@ type AppDelegate () =
 
     override this.FinishedLaunching (app, options) =
         Forms.Init()
-        let appcore = new MyCryptoPortfolio.FSharp.App()
+        let appcore = new MyCryptoPortfolio.App()
         this.LoadApplication (appcore)
         base.FinishedLaunching(app, options)
 

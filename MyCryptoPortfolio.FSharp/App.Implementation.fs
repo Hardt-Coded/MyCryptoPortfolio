@@ -18,6 +18,8 @@ module Implementation =
     open MyCryptoPortfolio.Consts
 
     let storageModelId = "mycryptoportfolio"    
+
+    let waitSendondsBetweenCalls = 10
         
     let toColor colorHex =
         Color.FromHex(colorHex)
@@ -59,16 +61,21 @@ module Implementation =
     
 
     let getRates model =
-        async {
-            let currentSymbols = model.Items |> List.map (fun i -> i.Symbol)
-            try
-                let! rawRates = RateService.getRates ["EUR";"USD"] currentSymbols
-                return UpdateRates rawRates
-            with
-            | _ as e -> 
-                return DisplayErrorMessage ("Error loading Rates!",e.Message)
+        [
+            // Returns rates or an error message
+            async {
+                let currentSymbols = model.Items |> List.map (fun i -> i.Symbol)
+                try
+                    let! rawRates = RateService.getRates ["EUR";"USD"] currentSymbols
+                    return UpdateRates rawRates
+                with
+                | _ as e -> 
+                    return DisplayErrorMessage ("Error loading Rates!",e.Message)
             
-        } |> Cmd.ofAsyncMsg
+            } |> Cmd.ofAsyncMsg
+            // disable loading spinner
+            ChangeBusyState(false) |> Cmd.ofMsg
+        ] |> Cmd.batch
         
 
     let printCurrency (number:decimal) symbol =
@@ -102,6 +109,21 @@ module Implementation =
         
         } |> Cmd.ofAsyncMsg
 
+
+    let startWaitTimer dispatch =
+        let mutable countDown = waitSendondsBetweenCalls
+        let timer = new System.Timers.Timer 1000.
+        timer.Elapsed.Subscribe (fun _ -> 
+            if (countDown <= 0) then
+                timer.Stop()
+                dispatch (SetSecondsWaitUntilNextCall 0)
+            else
+                countDown <- countDown-1
+                dispatch (SetSecondsWaitUntilNextCall countDown)
+            ) |> ignore
+        timer.Enabled <- true
+        timer.Start()
+        
     // Elmish - INIT
     let init () = 
         let a = 1
@@ -136,6 +158,7 @@ module Implementation =
               TotalSum = 0.0m
               TotalSumDelta = 0.0m
               MainColor = fromColor Color.DarkViolet
+              SecondsWaitUntilNextCall = 0
             }
         
         try 
@@ -237,7 +260,14 @@ module Implementation =
                             )
                     let newModel = {model with Items = newItems; CurrentExchangeRates = rates}
                     let newModel = calculateTotal newModel
-                    newModel, Cmd.ofMsg (ChangeBusyState(false))
+                    
+
+                    let cmds = [
+                        Cmd.ofMsg (SetSecondsWaitUntilNextCall waitSendondsBetweenCalls)    
+                        Cmd.ofMsg (ChangeBusyState(false))
+                    ]                    
+
+                    newModel,  Cmd.batch cmds
 
             | ChangeBusyState b -> 
                 {model with IsLoading = b}, Cmd.none
@@ -303,17 +333,25 @@ module Implementation =
                 }
                 newModel, Cmd.none
 
+            | SetSecondsWaitUntilNextCall seconds ->
+                let newModel = {model with SecondsWaitUntilNextCall = seconds}
+
+                // Start timer, if the wait time is set to start
+                let cmd = 
+                    if (seconds >= waitSendondsBetweenCalls) then
+                        (Cmd.ofSub startWaitTimer)
+                    else
+                        Cmd.none
+                    
+                newModel, cmd    
+
             
-                
+        // persist current model into        
         Application.Current.Properties.[storageModelId] <- JsonConvert.SerializeObject(fst newModel)
         async {
             do! Application.Current.SavePropertiesAsync() |> Async.AwaitTask
         } |> Async.Start
-        //let serializedModel = JsonConvert.SerializeObject(newModel)
-        //Application.Current.Properties.["MyCurrentPortfolio"] <- serializedModel
-        //async {
-        //    do! Application.Current.SavePropertiesAsync() |> Async.AwaitTask
-        //} |> Async.Start
+        
         newModel
 
 
@@ -324,7 +362,7 @@ module Implementation =
                 View.ActivityIndicator(
                     isRunning = true,
                     color = Color.White,
-                    scale = 0.3
+                    scale = 0.1
                 )
             ]
         )
@@ -528,23 +566,15 @@ module Implementation =
                                             orientation = StackOrientation.Horizontal,
                                             horizontalOptions = LayoutOptions.End,
                                             children = [
-                                                View.Label(
+                                                yield View.Label(
                                                     text="+",
                                                     fontSize=32,
                                                     fontAttributes = FontAttributes.Bold,
-                                                    textColor=toColor model.MainColor,                                                    
+                                                    textColor=toColor model.MainColor,
+                                                    verticalOptions = LayoutOptions.Center,
                                                     margin = 3.0,
-                                                    gestureRecognizers = [View.TapGestureRecognizer(command = fun () -> dispatch(OpenAddNewCoinPage))]                                                    
-                                                    )
-                                                    
-                                                View.Label(
-                                                    text="⟳",
-                                                    fontSize=30,
-                                                    fontAttributes = FontAttributes.Bold,
-                                                    textColor=toColor model.MainColor,                                                    
-                                                    margin = 3.0,
-                                                    gestureRecognizers = [View.TapGestureRecognizer(command = fun () -> dispatch(LoadRates))]
-                                                    )
+                                                    gestureRecognizers = [View.TapGestureRecognizer(command = fun () -> dispatch(OpenAddNewCoinPage))]
+                                                    )                                                
                                             ]
                                         ).GridRow(0)
 
@@ -594,6 +624,37 @@ module Implementation =
                                                         )
                                                     .GridRow(2)    
                                                     .GridColumn(1)
+
+
+                                                yield View.StackLayout(
+                                                    orientation = StackOrientation.Horizontal,
+                                                    horizontalOptions = LayoutOptions.End,
+                                                    children = [
+                                                        
+                                                        if model.SecondsWaitUntilNextCall > 0 then    
+                                                            yield View.Label(
+                                                                text=(model.SecondsWaitUntilNextCall |> sprintf "%i"),
+                                                                fontSize=24,
+                                                                fontAttributes = FontAttributes.Bold,
+                                                                verticalOptions = LayoutOptions.Center,
+                                                                textColor=Color.DarkGray,     
+                                                                margin = Thickness(2.0, 6.0, 6.0, 2.0)
+                                                                )
+                                                        else
+                                                            yield View.Label(
+                                                                text="⟳",
+                                                                fontSize=30,
+                                                                fontAttributes = FontAttributes.Bold,
+                                                                verticalOptions = LayoutOptions.Center,
+                                                                textColor=Color.White,     
+                                                                margin = 3.0,
+                                                                gestureRecognizers = [ View.TapGestureRecognizer(command = fun () -> dispatch(LoadRates)) ]
+                                                                )
+                                                    ]
+                                                    )
+                                                    .GridRow(0)    
+                                                    .GridColumn(1)
+                                                    .GridRowSpan(3)
                                             ]
                                         ).GridRow(2)
 
