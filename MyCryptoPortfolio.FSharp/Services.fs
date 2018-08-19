@@ -65,7 +65,7 @@
     module SymbolService =
         open Newtonsoft.Json
         open System.Collections.Generic
-        open MyCryptoPortfolio.FSharp
+        open MyCryptoPortfolio
         
         
         

@@ -1,7 +1,8 @@
-namespace MyCryptoPortfolio.FSharp
+namespace MyCryptoPortfolio
 
 open System.Linq
 open System.Numerics
+open Xamarin.Forms
 
 
 /// Represents items in the model
@@ -24,6 +25,7 @@ type PortfolioEntry = {
     AmountTargetDelta:decimal
     DisplayType:DisplayType
     BaseCurrencySymbol:string
+    MainColor:string
     }
     with
         static member Empty = {
@@ -37,7 +39,38 @@ type PortfolioEntry = {
             AmountTargetDelta = 0.0m
             DisplayType = Simple
             BaseCurrencySymbol = ""
+            MainColor = ""
             }
+
+module Consts =
+
+    let availableMainColors = [
+        Color.DarkViolet
+        Color.DarkBlue
+        Color.DarkCyan
+        Color.DarkGoldenrod
+        Color.DarkGray
+        Color.DarkGreen
+        Color.DarkKhaki
+        Color.DarkMagenta
+        Color.DarkOliveGreen
+        Color.DarkOrange
+        Color.DarkOrchid
+        Color.DarkRed
+        Color.DarkSalmon
+        Color.DarkSeaGreen
+        Color.DarkSlateBlue
+        Color.DarkSlateGray
+        Color.DarkTurquoise
+        Color.Blue
+        Color.BlueViolet
+        Color.Black
+    ]
+
+    // Error Messages
+    let invalidAmount = ("Error on entering the Amount","The Amount must be at least zero.")
+    let coinAlreadyExists = ("Error on adding new Coin","Coin already exists in your portfolio!")
+
 
 module Helpers =
 

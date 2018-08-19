@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Include="Common.fs" />
     <Compile Include="Services.fs" />
+    <Compile Include="App.Model.fs" />
+    <Compile Include="App.Implementation.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
   <ItemGroup>
