@@ -20,6 +20,7 @@ module Model =
     type Model = {
             Items: PortfolioEntry list
             SelectedBaseCurrency:string
+            PreviousBaseCurrency:string
             BaseCurrencies: string list
             CurrentExchangeRates: Rate list
             TotalSum:decimal
@@ -58,6 +59,7 @@ module Model =
         // Rates
         | LoadRates 
         | UpdateRates of Rate list
+        | SetCurrentBaseCurrency of string
         
         // Pages
         | OpenAddNewCoinPage

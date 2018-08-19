@@ -11,8 +11,9 @@ open Newtonsoft.Json
 
 
 module App =
-    open Model
+    
     open Implementation
+    open Views
 
     
     

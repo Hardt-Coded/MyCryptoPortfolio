@@ -18,12 +18,14 @@ type PortfolioEntry = {
     Symbol:string
     CoinName:string
     Amount:decimal
+    
     PreviousChangeRate:decimal
     ChangeRate:decimal
     ChangeRateDelta:decimal
     AmountTarget:decimal
     AmountTargetDelta:decimal
     DisplayType:DisplayType
+    PreviousBaseCurrencySymbol:string
     BaseCurrencySymbol:string
     MainColor:string
     }
@@ -38,6 +40,7 @@ type PortfolioEntry = {
             AmountTarget = 0.0m
             AmountTargetDelta = 0.0m
             DisplayType = Simple
+            PreviousBaseCurrencySymbol = ""
             BaseCurrencySymbol = ""
             MainColor = ""
             }
@@ -66,6 +69,8 @@ module Consts =
         Color.BlueViolet
         Color.Black
     ]
+
+    let availableBaseCurrencies = ["EUR"; "USD"; "JPY"; "GBP";"AUD";]
 
     // Error Messages
     let invalidAmount = ("Error on entering the Amount","The Amount must be at least zero.")
