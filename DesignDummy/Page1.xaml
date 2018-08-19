@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesignDummy.Page1"
+             BackgroundColor="White">
+    <ContentPage.Content>
+        <Grid VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0"
+                         Orientation="Horizontal"
+                         HorizontalOptions="End"
+                         VerticalOptions="Center">
+                <Label Text="+"
+                       FontSize="32"
+                       FontAttributes="Bold"
+                       TextColor="DarkViolet" />
+                <Label Text="⟳"
+                       FontSize="30"
+                       FontAttributes="Bold"
+                       TextColor="DarkViolet" />
+            </StackLayout>
+
+            <StackLayout Grid.Row="1">
+                <ScrollView>
+                    <Grid RowSpacing="0"
+                          Padding="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0"
+                               Grid.ColumnSpan="2"
+                               TextColor="White"
+                               BackgroundColor="DarkViolet"
+                               HorizontalOptions="Fill"
+                               HorizontalTextAlignment="Center"
+                               FontSize="14"
+                               Margin="0"
+                               FontAttributes="Bold">BitCoin (BTC)</Label>
+                        <Label Grid.Row="1"
+                               Grid.ColumnSpan="2"
+                               Grid.Column="0"
+                               TextColor="White"
+                               BackgroundColor="DarkViolet"
+                               HorizontalOptions="Fill"
+                               HorizontalTextAlignment="Center"
+                               FontSize="14"
+                               Margin="0"
+                               FontAttributes="Bold">Amount: 10.12345</Label>
+
+                        <StackLayout Grid.Row="0"
+                                     Grid.RowSpan="2"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     HorizontalOptions="End"
+                                     VerticalOptions="Center">
+                            <Label FontSize="38"
+                                   Margin="0,-9,4,-5"
+                                   TextColor="Yellow">⍟</Label>
+                            <Label FontSize="32"
+                                   Margin="0,-4,6,-5"
+                                   TextColor="Yellow">⚙</Label>
+                        </StackLayout>
+                        
+
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               TextColor="Black">Rate</Label>
+                        <Label Grid.Row="2"
+                               Grid.Column="1"
+                               TextColor="Black">Total</Label>
+                        <Label Grid.Row="3"
+                               Grid.Column="0"
+                               TextColor="Black">1,000.000 EUR</Label>
+                        <Label Grid.Row="3"
+                               Grid.Column="1"
+                               TextColor="Black">11,000.000 EUR</Label>
+                        <Label Grid.Row="4"
+                               Grid.Column="0"
+                               TextColor="DarkGreen">500.00 EUR</Label>
+                        <Label Grid.Row="4"
+                               Grid.Column="1"
+                               TextColor="DarkGreen">5,500.00 EUR</Label>
+
+                        <StackLayout Orientation="Horizontal" 
+                                     Grid.Row="5" 
+                                     Grid.Column="1"
+                                     HorizontalOptions="End">
+
+                            <Label Grid.Row="5"
+                                   Grid.Column="0"
+                                   TextColor="DarkViolet"
+                                   Text="✘"
+                                   FontSize="32"
+                                   HorizontalOptions="End"
+                                   Margin="3" />
+                            <Label Grid.Row="5"
+                                   Grid.Column="1"
+                                   FontSize="38"
+                                   FontAttributes="Bold"
+                                   TextColor="DarkViolet"
+                                   Text="✎" 
+                                   Margin="10,0,0,0"/>
+                        </StackLayout>
+                        
+                    </Grid>
+                </ScrollView>
+            </StackLayout>
+
+
+            <Grid Grid.Row="2"
+                  BackgroundColor="DarkViolet"
+                  RowSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       Grid.Column="1"
+                       FontAttributes="Bold"
+                       TextColor="White">Total</Label>
+                <Label Grid.Row="1"
+                       Grid.Column="1"
+                       FontAttributes="Bold"
+                       TextColor="White">25,000.00 EUR</Label>
+                <Label Grid.Row="2"
+                       Grid.Column="1"
+                       FontAttributes="Bold"
+                       TextColor="OrangeRed">1,000.00 EUR</Label>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
