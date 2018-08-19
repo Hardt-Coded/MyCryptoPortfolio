@@ -19,10 +19,10 @@ The function in the service file return correctly Async<Result<ExRate list, stri
 # Description of the App
 
 
-[image1](docimages/Description_1.png)
+![image1](docimages/Description_1.png)
 
-[image2](docimages/Description_2.png)
+![image2](docimages/Description_2.png)
 
-[image3](docimages/Description_3.png)
+![image3](docimages/Description_3.png)
 
 
