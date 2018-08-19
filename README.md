@@ -1,10 +1,10 @@
 # MyCryptoPortfolio
 
-Manages your crypto portfolio on your phone. 
+Manages your crypto portfolio on your phone and shows changes to the last rate update.
 
-This app is written in F#, Xamarin and Xamarin.Elmish. (Awesome tools)
+This app is written in F#, Xamarin and Xamarin.Elmish. (awesome tools)
 
-It'S under the MIT Licence.
+It's under the MIT Licence.
 
 I use [cryptocompare.com]() to uses the rates. Thanks to these guys. You are awesome.
 
@@ -16,5 +16,13 @@ Btw. Please note, that I am using Exceptions in my service code. The first appro
 
 The function in the service file return correctly Async<Result<ExRate list, string>>. But the consuming function App.fs -> getRates, gets a strange error message, something with Argument bla, and on "Ok x" x is an integer. So I change to the exception thingy.
 
+# Description of the App
+
+
+[image1](docimages/Description_1.png)
+
+[image2](docimages/Description_2.png)
+
+[image3](docimages/Description_3.png)
 
 

@@ -10,15 +10,22 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MyCryptoPortfolio.FSharp.iO
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DummyDesign", "DummyDesign", "{107CA323-D158-43D9-BBBE-9BF306312FE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignDummy", "DesignDummy\DesignDummy.csproj", "{FCB0C82C-5DF8-4F62-A1BC-D688705652D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesignDummy", "DesignDummy\DesignDummy.csproj", "{FCB0C82C-5DF8-4F62-A1BC-D688705652D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignDummy.Android.Android", "DesignDummy.Android\DesignDummy.Android.Android\DesignDummy.Android.Android.csproj", "{DC940ED3-FD63-4587-895C-FA840E150CD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignDummy.Android", "DesignDummy.Android\DesignDummy.Android\DesignDummy.Android.csproj", "{99D0E622-9D8E-4613-A5E2-76346AE68289}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesignDummy.Android", "DesignDummy.Android\DesignDummy.Android\DesignDummy.Android.csproj", "{99D0E622-9D8E-4613-A5E2-76346AE68289}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherStuff", "OtherStuff", "{49182161-8B29-47C1-A116-1583BAB79867}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docimages", "docimages", "{C57BAD33-92CA-408A-9B44-709184678959}"
+	ProjectSection(SolutionItems) = preProject
+		docimages\Description_1.png = docimages\Description_1.png
+		docimages\Description_2.png = docimages\Description_2.png
+		docimages\Description_3.png = docimages\Description_3.png
 	EndProjectSection
 EndProject
 Global
@@ -357,6 +364,7 @@ Global
 		{FCB0C82C-5DF8-4F62-A1BC-D688705652D4} = {107CA323-D158-43D9-BBBE-9BF306312FE2}
 		{DC940ED3-FD63-4587-895C-FA840E150CD5} = {107CA323-D158-43D9-BBBE-9BF306312FE2}
 		{99D0E622-9D8E-4613-A5E2-76346AE68289} = {107CA323-D158-43D9-BBBE-9BF306312FE2}
+		{C57BAD33-92CA-408A-9B44-709184678959} = {49182161-8B29-47C1-A116-1583BAB79867}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F6D05029-56B8-4E45-AF2D-0E76295DDBA2}
