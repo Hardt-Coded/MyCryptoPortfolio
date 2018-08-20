@@ -6,7 +6,7 @@ This app is written in F#, Xamarin and Xamarin.Elmish. (awesome tools)
 
 It's under the MIT Licence.
 
-I use [cryptocompare.com]() to uses the rates. Thanks to these guys. You are awesome.
+I use [cryptocompare.com]() to get the current rates and the available symbols for all the crypto currencies. Thanks to these guys. You are awesome.
 
 There is another App named MyCryptoPortfolio in the Windows App Store. The current Version is a rewrite and redesign in F#.
 
@@ -19,10 +19,10 @@ The function in the service file return correctly Async<Result<ExRate list, stri
 # Description of the App
 
 
-[image1](docimages/Description_1.png)
+![image1](docimages/Description_1.png)
 
-[image2](docimages/Description_2.png)
+![image2](docimages/Description_2.png)
 
-[image3](docimages/Description_3.png)
+![image3](docimages/Description_3.png)
 
 
