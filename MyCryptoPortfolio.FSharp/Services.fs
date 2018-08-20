@@ -1,4 +1,6 @@
-﻿module Services
+﻿namespace MyCryptoPortfolio
+
+module Services =
 
     open System.Net.Http    
 
@@ -124,8 +126,103 @@
 
             }
     
+    [<RequireQualifiedAccess>]
+    module PortfolioService =
+        open Xamarin.Forms
+        open Newtonsoft.Json
 
+        module Models =
+            
+            type MainViewStorageModel = {
+                SelectedBaseCurrency:string
+                PreviousBaseCurrency:string
+            }
+                with 
+                    static member defaultValue =
+                        {
+                            SelectedBaseCurrency = "EUR"
+                            PreviousBaseCurrency = "EUR"
+                        } 
 
+        module Items = 
+            let private serializeList (list:PortfolioEntry list) = 
+                JsonConvert.SerializeObject(list)
+            let private deserializeList json =
+                JsonConvert.DeserializeObject<PortfolioEntry list>(json)
 
+            let getItems () =
+                match Application.Current.Properties.TryGetValue Consts.entryStorageModelId with
+                | true, (:? string as json) ->
+                    try
+                        json |> deserializeList
+                    with
+                    | _ as ex -> []
+                | _ -> []
+        
+            let storeItemsAsync items =
+                async {
+                    let json = items |> serializeList
+                    Application.Current.Properties.[Consts.entryStorageModelId] <- json
+                    do! Application.Current.SavePropertiesAsync() |> Async.AwaitTask
+                }
+
+            let addItemsAsync item =
+                async {
+                    do! getItems()
+                        |> List.append [item]
+                        |> storeItemsAsync                
+                }
+            
+            // This method only updates the Amout!
+            let updateItemAsync item =
+                async {
+                    do! getItems()                                
+                        |> List.map (fun i ->
+                                        if i.Symbol <> item.Symbol then i
+                                        else {i with 
+                                                Amount = item.Amount                                            
+                                            }
+                                    )                    
+                        |> storeItemsAsync                
+                }
+
+            let deleteItemAsync item =
+                async {
+                    do! getItems()                                
+                        |> List.filter (fun i -> i.Symbol <> item.Symbol)
+                        |> storeItemsAsync                
+                }       
+
+        module MainColor =
+
+            let getMainColor () =
+                match Application.Current.Properties.TryGetValue Consts.mainColorStorageModelId with
+                | true, (:? string as hexColor) -> hexColor                
+                | _ -> Helpers.fromColor Color.DarkViolet
+        
+            let storeMainColorAsync hexColor =
+                async {                
+                    Application.Current.Properties.[Consts.mainColorStorageModelId] <- hexColor
+                    do! Application.Current.SavePropertiesAsync() |> Async.AwaitTask
+                }
+
+        module MainViewModel =
+            open Models
+
+            let getMainViewModel () =
+                match Application.Current.Properties.TryGetValue Consts.mainviewStorageModelId with
+                | true, (:? string as json) -> 
+                    try
+                        json |> JsonConvert.DeserializeObject<MainViewStorageModel>
+                    with
+                    | _ as ex ->  MainViewStorageModel.defaultValue                      
+                | _ -> MainViewStorageModel.defaultValue  
+        
+            let storeMainViewModelAsync (model:MainViewStorageModel) =
+                async {
+                    let json = JsonConvert.SerializeObject(model)
+                    Application.Current.Properties.[Consts.mainviewStorageModelId] <- json
+                    do! Application.Current.SavePropertiesAsync() |> Async.AwaitTask
+                }
 
 

@@ -26,8 +26,7 @@ type PortfolioEntry = {
     AmountTargetDelta:decimal
     DisplayType:DisplayType
     PreviousBaseCurrencySymbol:string
-    BaseCurrencySymbol:string
-    MainColor:string
+    BaseCurrencySymbol:string    
     }
     with
         static member Empty = {
@@ -41,10 +40,10 @@ type PortfolioEntry = {
             AmountTargetDelta = 0.0m
             DisplayType = Simple
             PreviousBaseCurrencySymbol = ""
-            BaseCurrencySymbol = ""
-            MainColor = ""
+            BaseCurrencySymbol = ""            
             }
 
+[<RequireQualifiedAccess>]
 module Consts =
 
     let availableMainColors = [
@@ -76,10 +75,41 @@ module Consts =
     let invalidAmount = ("Error on entering the Amount","The Amount must be at least zero.")
     let coinAlreadyExists = ("Error on adding new Coin","Coin already exists in your portfolio!")
 
+    let storageModelId = "mycryptoportfolio"
+    let mainviewStorageModelId = storageModelId + "mainview"
+    let entryStorageModelId = storageModelId + "entries"
+    let mainColorStorageModelId = storageModelId + "maincolor"
+    
+
+    let waitSendondsBetweenCalls = 10
+
 
 module Helpers =
+    open System
 
     let (|LowerZero|Zero|GreaterZero|) x =
         if (x = 0.0M) then Zero
         elif (x < 0.0M) then LowerZero
         else GreaterZero
+
+    let toColor colorHex =
+        Color.FromHex(colorHex)
+
+    let fromColor (color:Color) =
+        String.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", color.A * 255.0 |> int, color.R * 255.0 |> int, color.G * 255.0 |> int, color.B * 255.0 |> int)
+
+
+module CommonViews =
+    open Elmish.XamarinForms.DynamicViews
+
+    let createBusyLayer () =
+        View.Grid(
+            backgroundColor = Color.FromHex "#A0000000",
+            children = [
+                View.ActivityIndicator(
+                    isRunning = true,
+                    color = Color.White,
+                    scale = 0.1
+                )
+            ]
+        )

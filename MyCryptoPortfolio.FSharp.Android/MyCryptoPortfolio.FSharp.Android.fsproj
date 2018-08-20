@@ -27,7 +27,7 @@
     <RestorePackages>true</RestorePackages>
     <OtherFlags>/warnon:1182</OtherFlags>
     <WarningLevel>4</WarningLevel>
-    <SelectedDevice>my_device</SelectedDevice>
+    <SelectedDevice>HUAWEI CLT-L29</SelectedDevice>
     <DefaultDevice>my_device</DefaultDevice>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
