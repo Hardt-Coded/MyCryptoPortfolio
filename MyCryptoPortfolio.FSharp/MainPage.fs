@@ -120,7 +120,7 @@ module MainPage =
 
         let calculateTotal model =
             let total = model.Items |> List.sumBy (fun i -> i.ChangeRate * i.Amount)
-            let totalDelta = total - model.TotalSum
+            let totalDelta = model.Items |> List.sumBy (fun i -> i.ChangeRateDelta * i.Amount)            
             {model with TotalSum = total; TotalSumDelta = totalDelta}
         
         let startWaitTimer dispatch =
