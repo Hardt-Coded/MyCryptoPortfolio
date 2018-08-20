@@ -16,6 +16,13 @@ Btw. Please note, that I am using Exceptions in my service code. The first appro
 
 The function in the service file return correctly Async<Result<ExRate list, string>>. But the consuming function App.fs -> getRates, gets a strange error message, something with Argument bla, and on "Ok x" x is an integer. So I change to the exception thingy.
 
+
+# Updates
+
+- 2018-08-20: Aft the awesome insperation of https://github.com/TimLariviere/ElmishContacts, 
+  I have introduce external command to seperate the pages into their own modules and to composite 
+  them in the App.fs like Tim it does. Thanks Tim.
+
 # Description of the App
 
 
