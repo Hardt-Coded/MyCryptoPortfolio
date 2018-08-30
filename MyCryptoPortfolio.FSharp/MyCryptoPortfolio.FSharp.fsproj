@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="ElmishExtension.fs" />
     <Compile Include="Common.fs" />
     <Compile Include="Services.fs" />
     <Compile Include="MainPage.fs" />

@@ -5,11 +5,12 @@ module Services =
     open System.Net.Http    
 
     let httpClient = new HttpClient()
-    exception Ex of string
+    
 
     module RateService =
         open Newtonsoft.Json
         open System.Collections.Generic
+        open System
         
 
         type ExRate = { CurrencySymbol:string;Rate:decimal}
@@ -59,8 +60,15 @@ module Services =
                                 | Ok v -> return v
                                 | Error msg -> return raise (Ex(msg))
                                 
-                        with                        
-                        | _ as e -> return raise (Ex("error getting rates: " + e.Message))
+                        with
+                        | :? AggregateException as ag -> 
+                            match ag.InnerExceptions |> Seq.toList with
+                            | head::tail -> 
+                                match head with
+                                | :? HttpRequestException -> return raise (Ex("Error on connecting to the service. Check your network connection and try again."))
+                                | _ as iex -> return raise iex
+                            | [] -> return raise ag
+                        | _ as e -> return raise e
 
              }
 

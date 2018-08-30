@@ -95,21 +95,19 @@ module MainPage =
             newEntry    
 
         let getRates model =
-            [
-                // Returns rates or an error message
-                async {
-                    let currentSymbols = model.Items |> List.map (fun i -> i.Symbol)
-                    try
-                        let! rawRates = RateService.getRates [model.SelectedBaseCurrency] currentSymbols
-                        return UpdateRates rawRates
-                    with
-                    | _ as e -> 
-                        return DisplayErrorMessage ("Error loading Rates!",e.Message)
+            // Returns rates or an error message
+            async {
+                let currentSymbols = model.Items |> List.map (fun i -> i.Symbol)
+                try
+                    let! rawRates = RateService.getRates [model.SelectedBaseCurrency] currentSymbols
+                    return [UpdateRates rawRates;ChangeBusyState false]
+                with
+                | _ as e -> 
+                    return [DisplayErrorMessage ("Error loading Rates!",e |> extractInnerExceptionIfAvailable);ChangeBusyState false]
             
-                } |> Cmd.ofAsyncMsg
-                // disable loading spinner
-                ChangeBusyState(false) |> Cmd.ofMsg
-            ] |> Cmd.batch
+            } |> Cmd.ofAsyncBatchMsg
+                
+            
         
 
         let printCurrency (number:decimal) symbol =

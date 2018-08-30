@@ -4,6 +4,7 @@ open System.Linq
 open System.Numerics
 open Xamarin.Forms
 
+exception Ex of string    
 
 /// Represents items in the model
 type Coin = {Symbol:string;Name:string}
@@ -98,6 +99,11 @@ module Helpers =
     let fromColor (color:Color) =
         String.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", color.A * 255.0 |> int, color.R * 255.0 |> int, color.G * 255.0 |> int, color.B * 255.0 |> int)
 
+    
+    let extractInnerExceptionIfAvailable (ex:exn) =
+        match ex with
+        | Ex msg -> msg
+        | _ -> if (ex.InnerException = null) then ex.Message else ex.InnerException.Message
 
 module CommonViews =
     open Elmish.XamarinForms.DynamicViews
