@@ -19,7 +19,8 @@ The function in the service file return correctly Async<Result<ExRate list, stri
 
 # Updates
 
-- 2018-08-20: Aft the awesome insperation of https://github.com/TimLariviere/ElmishContacts, 
+- 2018-08-30: Fixed the busy state spinner disapears before loading of rates is complete. Introducing a ofAsyncBatchMsg Cmd extension to handle multiple messages after a async task is done. 
+- 2018-08-20: After the awesome insperation of https://github.com/TimLariviere/ElmishContacts, 
   I have introduce external command to seperate the pages into their own modules and to composite 
   them in the App.fs like Tim it does. Thanks Tim.
 
