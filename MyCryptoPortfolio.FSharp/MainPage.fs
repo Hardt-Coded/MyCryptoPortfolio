@@ -240,12 +240,8 @@ module MainPage =
                         result |> calculateTotal
                     else
                         result                
-                let cmds = [
-                    Cmd.ofMsg (SetSecondsWaitUntilNextCall Consts.waitSendondsBetweenCalls)    
-                    Cmd.ofMsg (ChangeBusyState(false))                    
-                ]                    
 
-                newModel,  (Cmd.batch cmds), Nope
+                newModel,  Cmd.ofMsg (SetSecondsWaitUntilNextCall Consts.waitSendondsBetweenCalls), Nope
 
         let setCurrentBaseCurrency currency model =
             let newModel = {
